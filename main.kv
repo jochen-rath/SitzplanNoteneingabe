@@ -1,0 +1,90 @@
+<MultiButton@Button>:
+    text: 'Multi'
+    size_hint:None,None
+    background_color: 0, 1, 1, 1
+    font_size: app.schriftgroesse
+    size: 5*self.font_size, 4*self.font_size
+
+<MenuButton@Button>:
+    text: 'Multi'
+    size_hint:None,None
+    background_color: 0, 1, 1, 1
+    font_size: app.schriftgroesse
+    size: 5*self.font_size, 4*self.font_size
+    on_release: app.entferneMenuLadeSitzplan(self.text)
+
+<LabelButton@Button>:
+    text: "0"
+    size_hint:None,None
+    background_color: 0, 1, 1, 1
+    font_size: app.schriftgroesse
+    size: 2*self.font_size, 2*self.font_size
+
+<LabelTouch>:
+    orientation: 'vertical'
+    size: app.schriftgroesse*5,app.schriftgroesse*2
+    pos: 0,0
+    size_hint: None,None
+    Label:
+        id: labelVorname
+        font_size: app.schriftgroesse
+        text: 'Vorname'
+    Label:
+        id: labelNachname
+        font_size: app.schriftgroesse
+        text: 'Nachname'
+<Pult>:
+    size:app.schriftgroesse*9,app.schriftgroesse*2
+    center: app.breite/2, app.schriftgroesse
+    size_hint: None,None
+    canvas:
+        Color:
+            rgba: 1,1,1, 1
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    LabelTouch:
+        id: pultLabel
+        center:root.center
+
+<NamenUndNotenInBox@BoxLayout>:
+    orientation: 'horizontal'
+    size: app.schriftgroesse*7,app.schriftgroesse*2
+    pos: 100,100
+    size_hint: None,None
+    LabelTouch:
+        id: namensLabel
+    NotenDropDown:
+        id: notenAuswahl
+
+<NotenDropDown>:
+    pos:0,0
+    LabelButton:
+        id: btn
+        text: 'nT'
+        on_parent: dropdown.dismiss()
+        on_release: dropdown.open(self)
+    DropDown:
+        id: dropdown
+        on_select: btn.text = '{}'.format(args[1])
+        LabelButton:
+            text: 'nT'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '1'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '2'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '3'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '4'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '5'
+            on_release: dropdown.select(self.text)
+        LabelButton:
+            text: '6'
+            on_release: dropdown.select(self.text)
