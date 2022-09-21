@@ -2,24 +2,28 @@
 Android App zur Noteneingabe in einem Sitzplan
 
 
-##Beschreibung
+## Beschreibung
 Diese APP ermöglicht es, einen Sitzplan zu einer Klasse zu erstellen und dann bei jedem Schüler eine Note einzutragen. Die Noten werden dann in einer CSV-Datei gespeichert, die einfach in eine Excel oder Calc Tabelle importiert werden kann.
 
 
-##Voraussetzungen
+## Voraussetzungen
 Die App ist in Python geschrieben und benötigt Kivy. Installiere es mit
 ```
 pip3 install kivy
 ```
 
-##Android App erstellen
+## Android App erstellen
 In der Datei buildozer.spec sind die Voraussetzungen zur Erzeugung der Android App gegeben. Erzeuge die App mit dem Befehl
 ```
 buildozer android debug
 ```
 
-##Nutzung
-Auf einem Linux/Windows Computer kann die App direkt genutzt werden. Der Ziel ist es aber, die App auf einem Android Smartphone zu nutzen.
+## Nutzung
+Auf einem Linux/Windows Computer kann die App direkt genutzt werden:
+```
+python main.py
+```
+Der Ziel ist es aber, die App auf einem Android Smartphone zu nutzen.
 
  1. Erstelle im Home-Verzeichnis den Ordner "sitzplanNoten".
  2. Die App greift auf dem Pfad "os.path.join(os.getenv('EXTERNAL_STORAGE'),'sitzplanNoten')" zu.
