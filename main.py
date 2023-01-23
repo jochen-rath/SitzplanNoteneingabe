@@ -13,7 +13,7 @@ from kivy.utils import platform
 import csv
 import datetime
 import os
-
+import shutil
 
 class NotenDropDown(BoxLayout):
     pass
@@ -217,6 +217,10 @@ class StelleMenueDar(Widget):
         exit.pos=[0,0]
         exit.bind(on_press=lambda  x:app.stop())
         self.add_widget(exit)
+        nextcloud=MultiButton(text='Copy to\nNextcloud')
+        nextcloud.bind(on_press=lambda  x:self.kopiereZuNextcloud())
+        nextcloud.pos=[app.breite-nextcloud.size[0], 0]
+#        self.add_widget(nextcloud)
         infobox=BoxLayout(orientation='vertical')
         if os.path.isfile(os.path.join(app.grundpfad,app.infodatei)):
             with open(os.path.join(app.grundpfad,app.infodatei)) as csvfile:
@@ -230,6 +234,14 @@ class StelleMenueDar(Widget):
         infobox.pos=[0,exit.size[1]]
         infobox.center_x=app.breite/2
         self.add_widget(infobox)
+    def kopiereZuNextcloud(self):
+        app = App.get_running_app()
+        nextcloudPfad='ziel' if platform != 'android' else os.path.join(os.getenv('EXTERNAL_STORAGE'),'Android/media/com.nextcloud.client/nextcloud/jochen@nextcloud.rath-stotel.de/sitzplanNoten')
+        if not os.path.exists(nextcloudPfad):
+            os.mkdir(nextcloudPfad)
+        for datei in [x for x in os.listdir(app.grundpfad) if x.endswith('csv')]:
+            if os.path.isfile(os.path.join(app.grundpfad,datei)):
+                shutil.copy(os.path.join(app.grundpfad,datei),os.path.join(nextcloudPfad,datei))
 
 
 class MainApp(App):
@@ -238,6 +250,12 @@ class MainApp(App):
 #Bei 800 Pixel, Schriftgröße 20, bei 2248 Pixel Schriftgröße 35. Dazwischen lineare interpolieren
     schriftgroesse=int((40-20)/(2248-800)*(breite-800)+20)
     grundpfad='.' if platform != 'android' else os.path.join(os.getenv('EXTERNAL_STORAGE'),'sitzplanNoten')
+    ordnerDatei=os.path.join(os.getenv('EXTERNAL_STORAGE'),'sitzplanNotenPfad.txt')
+    if os.path.isfile(ordnerDatei):
+        with open(ordnerDatei) as f:
+            pfad=f.readline()
+        if os.path.isdir(pfad):
+            grundpfad=pfad
     if not os.path.exists(grundpfad):
         os.mkdir(grundpfad)
     configDatei=''
